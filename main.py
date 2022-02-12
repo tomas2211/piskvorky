@@ -1,40 +1,49 @@
 from piskvorky import Okno, HraciPlan
 
-o = Okno("Moje piškvorky")
+okno = Okno("Moje piškvorky")
 
-o.zobrazitText("Vítejte! Hraje kolečko.")
-o.nakreslitMrizku()
+okno.zobrazitText("Vítejte! Hraje kolečko.")
+okno.nakreslitMrizku()
 
-p = HraciPlan()
+plan = HraciPlan()
 
-stav = 0
-while pos := o.pockatNaKlik():
-    print(pos)
-    if p.jePoleVolne(pos):
-        if(stav):
-            o.nakreslitKrizek(pos)
-            p.pridatKrizek(pos)
+hrac = 0  # 0=kolecko, 1=krizek
+probihaHra = True
+
+while probihaHra:
+
+    x, y = okno.pockatNaKlik()
+    print("Hrac kliknul na pozici x:", x, "y:", y)
+
+    if plan.jePoleVolne(x, y):
+        # nakresit a zaznamenat do herniho planu
+        if(hrac == 0):
+            okno.nakreslitKolecko(x, y)
+            plan.pridatKolecko(x, y)
         else:
-            o.nakreslitKolecko(pos)
-            p.pridatKolecko(pos)
+            okno.nakreslitKrizek(x, y)
+            plan.pridatKrizek(x, y)
 
-        if p.vyhralPosledniTah():
-            if stav:
-                o.zobrazitUpozorneni("Vyhrál křížek")
+        # zkontrolovat vyhru jednoho z hracu
+        if plan.vyhralPosledniTah():
+            if hrac == 0:
+                okno.zobrazitUpozorneni("Vyhrálo kolečko")
             else:
-                o.zobrazitUpozorneni("Vyhrálo kolečko")
-            break
-                
+                okno.zobrazitUpozorneni("Vyhrál křížek")
+            probihaHra = False
 
-        stav = not stav
-        if stav:
-            o.zobrazitText("Hraje křížek")
+        # prepnout kolecko/krizek
+        if hrac == 0:
+            hrac = 1
+            okno.zobrazitText("Hraje křížek")
         else:
-            o.zobrazitText("Hraje kolečko")
+            hrac = 0
+            okno.zobrazitText("Hraje kolečko")
+            
     else:
-        if stav:
-            o.zobrazitText("Pole je zabrané, hraje křížek")
+        if hrac == 0:
+            okno.zobrazitText("Pole je zabrané, hraje kolečko")
         else:
-            o.zobrazitText("Pole je zabrané, hraje kolečko")
+            okno.zobrazitText("Pole je zabrané, hraje křížek")
 
-o.zavrit()
+okno.zavrit()
