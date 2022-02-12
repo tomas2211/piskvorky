@@ -1,11 +1,10 @@
-from piskvorky import Okno, HraciPlan
+from piskvorky_knihovna import Okno, HraciPlan
 
 okno = Okno("Moje piškvorky")
+plan = HraciPlan()
 
 okno.zobrazitText("Vítejte! Hraje kolečko.")
 okno.nakreslitMrizku()
-
-plan = HraciPlan()
 
 hrac = 0  # 0=kolecko, 1=krizek
 probihaHra = True
