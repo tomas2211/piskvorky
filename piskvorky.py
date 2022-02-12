@@ -5,7 +5,7 @@ sg.theme('Black')
 
 
 class Okno:
-    def __init__(self, title, size=(20, 10), cellSizePx=30):
+    def __init__(self, title, size=(20, 20), cellSizePx=30):
         self.size = size
         self.cellSize = cellSizePx
 
@@ -75,7 +75,7 @@ CIRCLE = 2
 
 
 class HraciPlan:
-    def __init__(self, size=(20, 10)):
+    def __init__(self, size=(20, 20)):
         self.size = size
         self.plan = [[0 for c in range(size[0])] for r in range(size[1])]
         self.lastMove = None
@@ -111,6 +111,9 @@ class HraciPlan:
         return countPos + countNeg - 1  # the start is counted twice
 
     def vyhralPosledniTah(self, znakuNaVyhru=5):
+        if self.lastMove is None:
+            print("Volani vyhralPosledniTah() pred jakymkoliv tahem.")
+            return False
         sign = self.plan[self.lastMove[1]][self.lastMove[0]]
         for delta in [(1, 0), (0, 1), (1, 1), (1, -1)]:
             znaku = self.countSigns(self.lastMove, delta)
@@ -118,41 +121,3 @@ class HraciPlan:
                 return True
 
 
-o = Okno("Moje piškvorky")
-
-o.zobrazitText("Vítejte! Hraje kolečko.")
-o.nakreslitMrizku()
-
-p = HraciPlan()
-
-stav = 0
-while pos := o.pockatNaKlik():
-    print(pos)
-    if p.jePoleVolne(pos):
-        if(stav):
-            o.nakreslitKrizek(pos)
-            p.pridatKrizek(pos)
-        else:
-            o.nakreslitKolecko(pos)
-            p.pridatKolecko(pos)
-
-        if p.vyhralPosledniTah():
-            if stav:
-                o.zobrazitUpozorneni("Vyhrál křížek")
-            else:
-                o.zobrazitUpozorneni("Vyhrálo kolečko")
-            break
-                
-
-        stav = not stav
-        if stav:
-            o.zobrazitText("Hraje křížek")
-        else:
-            o.zobrazitText("Hraje kolečko")
-    else:
-        if stav:
-            o.zobrazitText("Pole je zabrané, hraje křížek")
-        else:
-            o.zobrazitText("Pole je zabrané, hraje kolečko")
-
-o.zavrit()
