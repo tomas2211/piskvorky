@@ -31,6 +31,7 @@ class Okno:
         self.window = sg.Window(title, layout)
         self.window.read(10)  # let the window show up
         self.canvas.bind("<Button-1>", None)
+        self.nakreslitMrizku()
 
     def nakreslitMrizku(self):
         """Nakresli hraci mrizku v okne, smaze vse dosud pridane.

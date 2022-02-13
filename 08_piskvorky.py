@@ -5,22 +5,19 @@ plan = HraciPlan()
 
 okno.zobrazitUpozorneni("Ad maiorem Dei gloriam!")
 
-okno.nakreslitMrizku()
-
 okno.zobrazitText("Čekání na klik...")
 x, y = okno.pockatNaKlik()
 print("Hrac kliknul na pozici x:", x, "y:", y)
 
-plan.jePoleVolne(x, y)
-
 okno.nakreslitKolecko(x, y)
-plan.pridatKolecko(x, y)
-
 okno.nakreslitKrizek(x, y)
-plan.pridatKrizek(x, y)
 
-plan.vyhralPosledniTah()
-
+okno.pockatNaKlik()
 okno.zobrazitUpozorneni("Vyhrálo kolečko")
+
+#plan.jePoleVolne(x, y)
+#plan.pridatKrizek(x, y)
+#plan.pridatKolecko(x, y)
+#plan.vyhralPosledniTah()
 
 okno.zavrit()
