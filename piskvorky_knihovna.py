@@ -210,3 +210,4 @@ class HraciPlan:
             znaku = self.countSigns(self.lastMove, delta)
             if znaku >= znakuNaVyhru:
                 return True
+        return False
